@@ -1,0 +1,51 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### querydsl ###
+/dadoom-common/src/main/generated
+/dadoom-api/src/main/generated
+/dadoom-bo/src/main/generated
+
+### logback ###
+/dadoom-api/logs
+/dadoom-bo/logs
+
+### ehcache ###
+/dadoom-api/dadoom-ehcache
+/dadoom-bo/dadoom-ehcache
+/dadoom-ehcache
