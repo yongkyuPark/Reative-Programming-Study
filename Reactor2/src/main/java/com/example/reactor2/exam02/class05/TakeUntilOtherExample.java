@@ -1,4 +1,4 @@
-package com.example.reactor2.exam02.exam05;
+package com.example.reactor2.exam02.class05;
 
 import com.example.reactor2.utils.Logger;
 import com.example.reactor2.utils.TimeUtils;

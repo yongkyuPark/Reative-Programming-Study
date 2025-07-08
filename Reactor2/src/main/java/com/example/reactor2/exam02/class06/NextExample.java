@@ -1,19 +1,21 @@
-package com.example.reactor2.exam02.exam05;
+package com.example.reactor2.exam02.class06;
 
 import com.example.reactor2.common.SampleData;
 import com.example.reactor2.utils.Logger;
 import reactor.core.publisher.Flux;
 
 /**
- * takeWhile 기본 예제
- *  - 파라미터로 입력되는 Predicate이 true인 동안 emit 된 데이터만 Downstream에 emit 한다.
+ * next 기본 예제
+ *  - emit 된 데이터 중에서 첫번째 데이터만 Downstream 으로 emit 한다.
  */
-public class TakeWhileExample {
+public class NextExample {
 
     public static void main(String[] args) {
         Flux
                 .fromIterable(SampleData.btcTopPricesPerYear)
-                .takeWhile(tuple -> tuple.getT2() < 10_000_000)
+                .doOnNext(Logger::doOnNext)
+                .filter(tuple -> tuple.getT1() == 2015)
+                .next()
                 .subscribe(tuple -> Logger.onNext(tuple.getT1(), tuple.getT2()));
     }
 
