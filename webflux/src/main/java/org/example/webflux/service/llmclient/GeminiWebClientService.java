@@ -2,6 +2,9 @@ package org.example.webflux.service.llmclient;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.webflux.exception.CommonError;
+import org.example.webflux.exception.CustomErrorType;
+import org.example.webflux.exception.ErrorTypeException;
 import org.example.webflux.model.llmclient.LlmChatRequestDto;
 import org.example.webflux.model.llmclient.LlmChatResponseDto;
 import org.example.webflux.model.llmclient.LlmType;
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Slf4j
@@ -33,7 +38,7 @@ public class GeminiWebClientService implements LlmWebClientService {
                 .onStatus(HttpStatusCode::is4xxClientError, (clientResponse -> {
                     return clientResponse.bodyToMono(String.class).flatMap(body -> {
                         log.error("Error Response: {}", body);
-                        return Mono.error(new RuntimeException("API 요청 실패: " + body));
+                        return Mono.error(new ErrorTypeException("API 요청 실패: " + body, CustomErrorType.GEMINI_RESPONSE_ERROR));
                     });
                 }))
                 .bodyToMono(GeminiChatResponseDto.class)
@@ -55,7 +60,7 @@ public class GeminiWebClientService implements LlmWebClientService {
                 .onStatus(HttpStatusCode::is4xxClientError, (clientResponse -> {
                     return clientResponse.bodyToMono(String.class).flatMap(body -> {
                         log.error("Error Response: {}", body);
-                        return Mono.error(new RuntimeException("API 요청 실패: " + body));
+                        return Mono.error(new ErrorTypeException("API 요청 실패: " + body, CustomErrorType.GEMINI_RESPONSE_ERROR));
                     });
                 }))
                 .bodyToFlux(GeminiChatResponseDto.class)
