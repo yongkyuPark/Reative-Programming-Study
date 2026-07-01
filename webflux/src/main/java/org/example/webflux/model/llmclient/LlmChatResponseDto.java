@@ -4,25 +4,44 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.example.webflux.exception.CommonError;
 import org.example.webflux.model.llmclient.gemini.response.GeminiChatResponseDto;
 import org.example.webflux.model.llmclient.gpt.response.GptChatResponseDto;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@Slf4j
 public class LlmChatResponseDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 8887538025088462985L;
 
+    private String title;
     private String llmResponse;
     private CommonError error;
 
+    public boolean isValid() {
+        return Optional.ofNullable(error).isEmpty();
+    }
+
+    public LlmChatResponseDto(String title, String llmResponse) {
+        this.title = title;
+        this.llmResponse = llmResponse;
+    }
+
     public LlmChatResponseDto(CommonError error) {
+        log.error("[LlmResponseError] LlmResponseError: {}", error);
+        this.error = error;
+    }
+
+    public LlmChatResponseDto(CommonError error, Throwable ex) {
+        log.error("[LlmResponseError] LlmResponseError: {}", error, ex);
         this.error = error;
     }
 
